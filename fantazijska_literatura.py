@@ -15,10 +15,28 @@ vzorec_tocke = re.compile(r'score: ((\d+),(\d+)|(\d+))')
 vzorec_strani = re.compile(r'\d+')
 vzorec_izid = re.compile(r'\d\d\d\d')
 vzorec_desetletje = re.compile(r'\d+')
+vzorec_ocena = re.compile(r'\d\.\d{2,2}')
+vzorec_skrajsan = (r'(\d{0,3},\d{3,3},\d{3,3})|(\d{0,3},\d\d\d)|(\d{0,3})'
+                     + r' ratings')
+
+
+vzorec_st_bralcev = re.compile(vzorec_skrajsan)
 
 
 
 #############################################################################
+def izlusci_bralce(vnos):
+    seznam = vnos
+    for el in seznam:
+        if el.count('') == len(el):
+            seznam.remove(el)
+    print(seznam)
+    seznam = list(seznam)
+    for el in seznam[0]:
+        if el != '':
+            return el
+    return None
+
 def pridobi_tocke(html_knjige):
     span_s_tockami = html_knjige.find(['span'], class_="smallText uitext")
     #print(span_s_tockami)
@@ -28,8 +46,8 @@ def pridobi_tocke(html_knjige):
     if ',' in str(zadetek):
         novi_zadetek = zadetek.replace(',', '')
         #print(novi_zadetek)
-        return novi_zadetek
-    return zadetek
+        return int(novi_zadetek)
+    return int(zadetek)
 
 def pridobi_avtorja(blok):
     return blok.find('a', class_="authorName").string
@@ -76,7 +94,55 @@ def pridobi_izid_strani(html):
         #print([int(izid), strani])
         return [int(izid), strani]
 
+def ocena_in_st_bralcev(knjiga):
+    print(knjiga)
+    print(' ')
+    print(knjiga.find(['span'], class_ = "minirating"))
+    print(' ')
+    znacka = knjiga.find(['span'], class_ = "minirating")
+    iskani_niz = str(znacka)
+    print(iskani_niz)
+    print(' ')
+    ocena = None
+    bralci = None
+
+    try:
+        ocena = vzorec_ocena.findall(iskani_niz)[0]
+    except:
+        pass
+    try:
+        bralci = (vzorec_st_bralcev.findall(iskani_niz))
+    except:
+        pass
+
+    print(bralci)
+    st_bralcev = izlusci_bralce(bralci)
+    print(st_bralcev)
+    try:    
+        if "," in st_bralcev:
+            st_bralcev = st_bralcev.replace(',', "")
+    except:
+        pass
+
+    print(st_bralcev)
+
+    if ocena != None and st_bralcev != None:
+        #print([int(izid), int(strani)])
+        return [float(ocena), int(st_bralcev)]
+    elif ocena == None:
+        if st_bralcev == None:
+            #print([izid, strani])
+            return [ocena, st_bralcev]
+        else:
+            #print([izid, int(strani)])
+            return [ocena, int(st_bralcev)]
+    else:
+        #print([int(izid), strani])
+        return [float(ocena), st_bralcev]
+
+
 def obdelava_strani(link):
+    print(link)
     podatki = []
     userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
             ' (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
@@ -86,9 +152,10 @@ def obdelava_strani(link):
     tabela = html.find(['table'], class_="tableList js-dataTooltip")
     knjige = tabela.find_all('tr')
     #print(knjige[0])
-    i = 0
-    for knjiga in knjige[50:]:
-        #print(f'knjiga številka: {i}')
+    i = 1
+    for knjiga in knjige:
+        print(f'knjiga številka: {i}')
+        print(' ')
         link_do_knjige = knjiga.find('a')['href']
         #print(f'link_do_knjige: {link_do_knjige}')
         tocke = None
@@ -115,8 +182,14 @@ def obdelava_strani(link):
         izid_in_strani = pridobi_izid_strani(html_knjiga)
         izid = izid_in_strani[0]
         strani = izid_in_strani[1]
-        #print([naslov, avtor, izid, strani, tocke])
-        podatki.append([naslov, avtor, izid, strani, tocke])
+        ocena_in_bralci = ocena_in_st_bralcev(knjiga)
+        ocena = ocena_in_bralci[0]
+        st_bralcev = ocena_in_bralci[1]
+        print([naslov, avtor, izid, strani, tocke, ocena, st_bralcev])
+        print(' ')
+        print(' ')
+        print(' ')
+        podatki.append([naslov, avtor, izid, strani, tocke, ocena, st_bralcev])
         i += 1
     return podatki
 
@@ -135,7 +208,7 @@ def desetletje_podatki(link):
     #print(podatki)
     i = 2
     while True:
-        print(i)
+        #print(i)
         time.sleep(0.1)
         nova_stran = link + f'.Best_Fantasy_of_the_{desetletje}s?page={i}'
         try:

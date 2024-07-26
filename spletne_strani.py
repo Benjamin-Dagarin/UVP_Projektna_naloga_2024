@@ -18,13 +18,13 @@ def strani_po_desetletjih():
     pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
     html = BeautifulSoup(pridobi_stran.text, 'html.parser', from_encoding='UTF-8')
     znacka_z_linki = html.find(['div'], class_="u-paddingBottomMedium mediumText")
-    print(znacka_z_linki)
+    #print(znacka_z_linki)
     podznacke = znacka_z_linki.find_all('a')
-    print(podznacke)
+    #print(podznacke)
     linki = []
     for i in range(4, 14):
         linki.append((podznacke[i])['href'])
-    print(linki)
+    #print(linki)
     return linki
 
 

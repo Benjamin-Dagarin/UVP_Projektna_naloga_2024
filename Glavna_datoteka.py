@@ -23,7 +23,7 @@ userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
 
 linki_desetletja = spl.strani_po_desetletjih()
 with open('fantazijska_literatura.csv', 'w', encoding='UTF-8') as dat:
-    kljuci = ['Naslov', 'Avtor', 'Leta izida', 'Dolžina', 'Točke']
+    kljuci = ['Naslov', 'Avtor', 'Leta izida', 'Dolžina', 'Točke', 'Ocena', 'Število bralcev']
     csv_pisec = csv.writer(dat)
     csv_pisec.writerow(kljuci)
     for link in linki_desetletja:
