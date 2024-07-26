@@ -11,7 +11,7 @@ import time
 ##############################################################################
 # Vzorci
 
-vzorec_01 = re.compile(r'score: ((\d+),(\d+)|(\d+))')
+vzorec_tocke = re.compile(r'score: ((\d+),(\d+)|(\d+))')
 vzorec_strani = re.compile(r'\d+')
 vzorec_izid = re.compile(r'\d\d\d\d')
 vzorec_desetletje = re.compile(r'\d+')
@@ -21,8 +21,14 @@ vzorec_desetletje = re.compile(r'\d+')
 #############################################################################
 def pridobi_tocke(html_knjige):
     span_s_tockami = html_knjige.find(['span'], class_="smallText uitext")
+    #print(span_s_tockami)
     tocke_niz = span_s_tockami.find('a').string
-    zadetek = vzorec_01.search(tocke_niz).group(1)
+    #print(tocke_niz)
+    zadetek = vzorec_tocke.search(tocke_niz).group(1)
+    if ',' in str(zadetek):
+        novi_zadetek = zadetek.replace(',', '')
+        #print(novi_zadetek)
+        return novi_zadetek
     return zadetek
 
 def pridobi_avtorja(blok):
@@ -38,10 +44,14 @@ def pridobi_izid_strani(html):
     izid = None
     try:
         odsek = html.find(['div'], class_='BookDetails')
+        #print(f'odsek: {odsek}')
         odsek_s_stranmi = odsek.find(['div'], 
                                      class_="FeaturedDetails").find_all('p')[0]
+        #print(f'odsek_s_stranmi: {odsek_s_stranmi}')
         tekst = odsek_s_stranmi.string
+        #print(f'tekst: {tekst}')
         strani = (vzorec_strani.findall(tekst))[0]
+        #print(f'strani: {strani}')
     except:
         pass
     try:
@@ -53,15 +63,18 @@ def pridobi_izid_strani(html):
         pass
 
     if izid != None and strani != None:
+        #print([int(izid), int(strani)])
         return [int(izid), int(strani)]
     elif izid == None:
         if strani == None:
+            #print([izid, strani])
             return [izid, strani]
         else:
+            #print([izid, int(strani)])
             return [izid, int(strani)]
     else:
-        if strani == None:
-            return [int(izid), strani]
+        #print([int(izid), strani])
+        return [int(izid), strani]
 
 def obdelava_strani(link):
     podatki = []
@@ -74,15 +87,15 @@ def obdelava_strani(link):
     knjige = tabela.find_all('tr')
     #print(knjige[0])
     i = 0
-    for knjiga in knjige:
-        print(f'knjiga številka: {i}')
+    for knjiga in knjige[50:]:
+        #print(f'knjiga številka: {i}')
         link_do_knjige = knjiga.find('a')['href']
         #print(f'link_do_knjige: {link_do_knjige}')
         tocke = None
         avtor = None
         naslov = None
         try:
-            tocke = pridobi_tocke
+            tocke = pridobi_tocke(knjiga)
         except:
             pass
         try:
@@ -102,27 +115,10 @@ def obdelava_strani(link):
         izid_in_strani = pridobi_izid_strani(html_knjiga)
         izid = izid_in_strani[0]
         strani = izid_in_strani[1]
+        #print([naslov, avtor, izid, strani, tocke])
         podatki.append([naslov, avtor, izid, strani, tocke])
         i += 1
     return podatki
-
-
-#def pridobi_strani(blok):
-#    odsek = blok.find(['div'], class_='BookDetails')
-#    odsek_z_izidom = odsek.find(['div'], class_="FeaturedDetails")
-#    tekst = odsek_s_stranmi.string
-#    strani = (vzorec_strani.findall(tekst))[0]
-#    return int(strani)
-
-
-## Ekstrakcija podatkov na spletni strani od knjige
-#def pridobi_izid_in_strani(link):
-#    userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
-#            ' (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-#    )
-#    pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
-#    html = BeautifulSoup(pridobi_stran.text, 'html.parser', from_encoding='UTF-8')
-
 
 # Ekstrakcija blokov in nato podatkov na ustrezni strani
 def desetletje_podatki(link):
@@ -136,14 +132,17 @@ def desetletje_podatki(link):
     podatki = []
     trenutni_link = link
     podatki.extend(obdelava_strani(trenutni_link))
-    print(podatki)
+    #print(podatki)
     i = 2
     while True:
+        print(i)
         time.sleep(0.1)
         nova_stran = link + f'.Best_Fantasy_of_the_{desetletje}s?page={i}'
         try:
             podatki.extend(obdelava_strani(nova_stran))
         except:
+            break
+        finally:
             break
     
     return podatki
