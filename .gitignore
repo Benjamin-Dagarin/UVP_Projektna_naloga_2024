@@ -2,4 +2,6 @@ Plan_Dela.docx
 iskanje_blokov.py
 __pycache__/
 ~$an_Dela.docx
+*.tmp
+.ipynb_checkpoints
 
