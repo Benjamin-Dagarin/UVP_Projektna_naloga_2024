@@ -26,12 +26,17 @@ with open('fantazijska_literatura.csv', 'w', encoding='UTF-8') as dat:
     kljuci = ['Naslov', 'Avtor', 'Leta izida', 'Dolžina', 'Točke', 'Ocena', 'Število bralcev']
     csv_pisec = csv.writer(dat)
     csv_pisec.writerow(kljuci)
+    i = 0
     for link in linki_desetletja:
         podatki = fl.desetletje_podatki(link)
         for knjiga in podatki:
             csv_pisec.writerow(knjiga)
         print('konec')
-        break
+        if i == 3:
+            break
+        else:
+            i += 1
+            pass
 
 #print(podatki)
 
