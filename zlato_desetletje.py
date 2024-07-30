@@ -76,7 +76,7 @@ def mesto_v_tabeli(df, ime_stolpca):
             try:
                 pari.append([df.loc[desetl,ime_stolpca], desetl])
             except:
-                pass
+                pari.append([-1, desetl])
         print('C')
         print(pari)
         sortiranje_po_mestih = sorted(pari, key=itemgetter(0,1))
@@ -90,7 +90,7 @@ def mesto_v_tabeli(df, ime_stolpca):
         pari_desetletje_mesto.sort(key=itemgetter(0))
         print(pari_desetletje_mesto)
         print('F')
-        mesta = list(map(lambda x: x[1], pari_desetletje_mesto))
+        mesta = list(map(lambda x: int(x[1]), pari_desetletje_mesto))
         print('G')
         print(mesta)
         return mesta
