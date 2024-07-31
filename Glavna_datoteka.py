@@ -3,42 +3,28 @@
 ##############################################################################
 # Knjižnice
 
-from bs4 import BeautifulSoup
-import re
-import requests
-import time
 import csv
 
 #############################################################################
 # Moduli
-import fantazijska_literatura as fl
+
+import ekstrakcija_podatkov as ep
 import spletne_strani as spl
 
 #############################################################################
-# Prvi del - Analiza fantazijske literature in zapis v csv
-
-userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
-            ' (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-)
+# Pridobivanje podatkov o knjigah in njihov zapis v csv
 
 linki_desetletja = spl.strani_po_desetletjih()
-with open('fantazijska_literatura.csv', 'w', encoding='UTF-8') as dat:
-    kljuci = ['Naslov', 'Avtor', 'Leta izida', 'Dolžina', 'Točke', 'Ocena', 'Število bralcev']
+with open('podatki_fantazijske_knjige.csv', 'w', encoding='UTF-8') as dat:
+    kljuci = ['Naslov', 'Avtor', 'Leto izida', 'Dolžina',
+              'Točke', 'Ocena', 'Število bralcev']
     csv_pisec = csv.writer(dat)
     csv_pisec.writerow(kljuci)
-    i = 0
     for link in linki_desetletja:
-        podatki = fl.desetletje_podatki(link)
+        podatki = ep.desetletje_podatki(link)  # Ekstrakcija podatkov za desetletje
         for knjiga in podatki:
             csv_pisec.writerow(knjiga)
-        print('konec')
-        if i == 3:
-            break
-        else:
-            i += 1
-            pass
 
-#print(podatki)
 
 
 
