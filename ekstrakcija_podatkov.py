@@ -161,6 +161,7 @@ def obdelava_strani(link):
             pass
         try:
             naslov = pridobi_naslov(knjiga)
+            print(f'Naslov knjige: {naslov}')
         except:
             pass
         cel_link = "https://www.goodreads.com" + link_do_knjige
@@ -200,6 +201,7 @@ def desetletje_podatki(link):
     podatki.extend(obdelava_strani(trenutni_link))
     i = 2
     while True:
+        print(f'Desetletje: {desetletje}, stran: {i}')
         time.sleep(0.1)  # Varovalka, da spletna stran ne začne zavračati requestov
         nova_stran = link + f'.Best_Fantasy_of_the_{desetletje}s?page={i}'
         try:
