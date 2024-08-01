@@ -32,9 +32,9 @@ def mesto_v_tabeli(df, ime_stolpca):
         return mesta
 
 def dodelitev_mest(df):
-    novi_df = df.reset_index(inplace=True)
-    novi_df.index += 1
-    return novi_df
+    df.reset_index(inplace=True)
+    df.index += 1
+    
 
 
 
