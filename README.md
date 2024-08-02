@@ -2,11 +2,15 @@
 
 V sledeči projektni nalogi, ki sem jo spisal v okviru predmeta Uvod v programiranje, vam bom predstavil analizo izbora fantazijskih knjig, ki sem ga pridobil s spletne strani <https://www.goodreads.com/>. Pri tem sem za delo uporabil programski jezik python.
 
-V projektni nalogi sem najprej poiskal najbolj priljubljene avtorje in knjige. Zatem sem preverjal, ali kvaliteta fantazijskih knjig tekom let narašča. Ugotavljal sem, ali so daljše knjige boljše kot krajše in ali so avtorji, ki pišejo daljše knjige, bolj priljubljeni. Zanimalo me je tudi, ali starejši avtorji v splošnem pišejo bolje kot mlajši ali pa je ravno obratno. Podatke sem zbral v datoteki `fantazijska_literatura.csv`.
+Najprej sem v datoteki `spletne_strani.py` sestavil funkcijo, ki je iz izhodiščne spletne strani izluščila url-je do spletnih strani fantazijskih knjig, razvščenih po desetletjih. To funkcijo sem potem uvozil v osrednjo datoteko `Glavna_datoteka.py`, kjer sem z zanko `for` iteriral po url-jih. Vanjo sem uvozil tudi funkcije iz `ekstrakcija_podatkov.py`, ki sem jih uporabil za pridobivanje podatkov o knjigah s prej omenjenih spletnih strani. Podatke sem s pomočjo `Glavna_datoteka.py` zapisal v dokumentu csv `podatki_fantazijske_knjige.csv`, ki sem jih uvozil v zvezek `Analiza_fantazijskih_knjig.ipynb`, kjer sem jih analiziral in ustrezno interpretiral.
 
-V drugem delu analize sem fantazijski žanr postavil ob bok preostalim književnim zvrstem in skušal razbrati, kolikšen delež najboljših knjig predstavljajo fantazijske knjige ter ali so bolje ocenjene kot preostale. Izluščene podatke sem shranil v datoteki `primerjava_zanrov.csv`
+V prvem delu sem sestavil lestvice najboljših 10 iz vsake kategorije, tj. najkakovostnejše in najbolj brane knjige ter podobno za avtorje. V drugem delu sem raziskoval trende v žanru, predvsem kvaliteto, število bralcev, število avtorjev ter število knjig v odvisnosti od desetletja izida književnega dela, prav tako tudi odvisnost kvalitete od dolžine in branosti od dolžine.
 
-Rezultate svoje raziskave sem predstavil v zvezku `Analiza_fantazijskih_knjig.ipynb`. Upam, da bodo ugotovitve pomagale vsem ljubitejem fantazijskih knjig pri odločitvi, katero knjigo najprej prebrati.
+V zadnjem, tretjem delu sem poskusil določiti t.i. "zlato dobo" fantazijskega žanra, torej desetletje, ki je bilo s stališča fantazijske zvrsti najboljše.
+
+Ugotovitve sem zbral na koncu posameznih delov, nekaj uvidov v prihodnost tudi v Zaključku. Upam, da bodo rezultati pomagali vsem ljubiteljem fantazijskih knjig pri odločitvi, katero knjigo prebrati najprej.
+
+*Benjamin Dagarin*
 
 
 
