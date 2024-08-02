@@ -6,7 +6,7 @@ Najprej sem v datoteki `spletne_strani.py` sestavil funkcijo, ki je iz izhodiš�
 
 V prvem delu sem sestavil lestvice najboljših 10 iz vsake kategorije, tj. najkakovostnejše in najbolj brane knjige ter podobno za avtorje. V drugem delu sem raziskoval trende v žanru, predvsem kvaliteto, število bralcev, število avtorjev ter število knjig v odvisnosti od desetletja izida književnega dela, prav tako tudi odvisnost kvalitete od dolžine in branosti od dolžine.
 
-V zadnjem, tretjem delu sem poskusil določiti t.i. "zlato dobo" fantazijskega žanra, torej desetletje, ki je bilo s stališča fantazijske zvrsti najboljše.
+V zadnjem, tretjem delu sem poskusil določiti t.i. "zlato dobo" fantazijskega žanra, torej desetletje, ki je bilo s stališča fantazijske zvrsti najboljše. Pri tem za točkovanje uporabil funkcijo, ki sem jo napisal v `zlato_desetletje.py`.
 
 Ugotovitve sem zbral na koncu posameznih delov, nekaj uvidov v prihodnost tudi v Zaključku. Upam, da bodo rezultati pomagali vsem ljubiteljem fantazijskih knjig pri odločitvi, katero knjigo prebrati najprej.
 
