@@ -1,4 +1,4 @@
-# fantazijska_literatura.py
+# ekstrakcija_podatkov.py
 
 ##############################################################################
 # Knjižnice
@@ -21,7 +21,7 @@ vzorec_skrajsan = (r'(\d{0,3},\d{3,3},\d{3,3})|(\d{0,3},\d{3,3})|(\d{0,3})'
 vzorec_st_bralcev = re.compile(vzorec_skrajsan)
 
 #############################################################################
-# Funkcije, namenjene ekstarhiranju posameznih podatkov o knjigah
+# Funkcije, namenjene ekstrahiranju posameznih podatkov o knjigah
 
 def izlusci_bralce(vnos):
     """Ko v funkciji 'pridobi_oceno_st_bralcev' pridobivamo število bralcev,
@@ -95,17 +95,17 @@ def pridobi_izid_strani(html_knjige):
 
 def pridobi_oceno_st_bralcev(blok_knjige):
     znacka = blok_knjige.find(['span'], class_ = "minirating")
-    iskani_blok = str(znacka)
+    iskani_podblok = str(znacka)
     ocena = None
     bralci = None
     st_bralcev = None
 
     try:
-        ocena = vzorec_ocena.findall(iskani_blok)[0]
+        ocena = vzorec_ocena.findall(iskani_podblok)[0]
     except:
         pass
     try:
-        bralci = (vzorec_st_bralcev.findall(iskani_blok))
+        bralci = (vzorec_st_bralcev.findall(iskani_podblok))
     except:
         pass
     try:
@@ -161,13 +161,16 @@ def obdelava_strani(link):
             pass
         try:
             naslov = pridobi_naslov(knjiga)
-            print(f'Naslov knjige: {naslov}')
         except:
             pass
+
+        # Ker vsi podatki niso dostopni že na posamezni spletni strani, moramo
+        # za dolžino in leto izida iti na spletno stran posamezne knjige.
+
         cel_link = "https://www.goodreads.com" + link_do_knjige
-        pridobi_stran_knjiga = requests.get(cel_link,
+        pridobi_stran_knjige = requests.get(cel_link,
                                             headers={'User-Agent' : userAgent})
-        html_knjiga = BeautifulSoup(pridobi_stran_knjiga.text, 'html.parser',
+        html_knjiga = BeautifulSoup(pridobi_stran_knjige.text, 'html.parser',
                                     from_encoding='UTF-8')
         izid_in_strani = pridobi_izid_strani(html_knjiga)
         izid = izid_in_strani[0]
@@ -201,7 +204,6 @@ def desetletje_podatki(link):
     podatki.extend(obdelava_strani(trenutni_link))
     i = 2
     while True:
-        print(f'Desetletje: {desetletje}, stran: {i}')
         time.sleep(0.1)  # Varovalka, da spletna stran ne začne zavračati requestov
         nova_stran = link + f'.Best_Fantasy_of_the_{desetletje}s?page={i}'
         try:
