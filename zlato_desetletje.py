@@ -3,11 +3,11 @@
 ##############################################################################
 # Knjižnice
 
-import pandas as pd
 from operator import itemgetter
 
 ##############################################################################
-# Ekstrakcija linkov do spletnih strani po desetletjih
+# Funkcija, namenjena razvrščanju desetletij po mestih v posameznih 
+# kategorijah v datoteki Analiza_fantazijskih_knjig.ipynb
 
 def mesto_v_tabeli(df, ime_stolpca):
         """Funkcija, namenjena razvrščanju desetletij po kategorijah. 

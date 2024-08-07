@@ -9,6 +9,11 @@ import re
 import time
 
 ##############################################################################
+# Moduli
+
+from user_agent import userAgent
+
+##############################################################################
 # Vzorci
 
 vzorec_tocke = re.compile(r'score: ((\d+),(\d+)|(\d+))')
@@ -139,9 +144,6 @@ def obdelava_strani(link):
     """
 
     podatki = []
-    userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
-                 ' (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-    )
     pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
     html = BeautifulSoup(pridobi_stran.text, 'html.parser', from_encoding='UTF-8')
     tabela = html.find(['table'], class_="tableList js-dataTooltip")
@@ -191,10 +193,6 @@ def desetletje_podatki(link):
        v argumentu funkcije, ekstrahira vse podatke o knjigah, nato pa gre na
        naslednje strani posameznega desetletja.
     """
-
-    userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
-            ' (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-    )
     pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
     html = BeautifulSoup(pridobi_stran.text, 'html.parser', from_encoding='UTF-8')
     desetletje_niz = html.find(['h1'], class_="gr-h1 gr-h1--serif").string

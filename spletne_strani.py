@@ -5,6 +5,7 @@
 
 from bs4 import BeautifulSoup
 import requests
+from user_agent import userAgent
 
 ##############################################################################
 # Ekstrakcija linkov do spletnih strani po desetletjih
@@ -15,10 +16,6 @@ def strani_po_desetletjih():
        podameznim desetletjem.
     """
     link = "https://www.goodreads.com/list/show/79774.Best_Fantasy_of_the_30s"
-
-    userAgent = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' +
-                 ' (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-    )
     pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
     html = BeautifulSoup(pridobi_stran.text, 'html.parser',
                          from_encoding='UTF-8')
