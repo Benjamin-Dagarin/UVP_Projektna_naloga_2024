@@ -11,7 +11,7 @@ import time
 ##############################################################################
 # Moduli
 
-from user_agent import userAgent
+from uporabniski_posrednik import up_posrednik
 
 ##############################################################################
 # Vzorci
@@ -144,7 +144,7 @@ def obdelava_strani(link):
     """
 
     podatki = []
-    pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
+    pridobi_stran = requests.get(link, headers = {'User-Agent' : up_posrednik})
     html = BeautifulSoup(pridobi_stran.text, 'html.parser', from_encoding='UTF-8')
     tabela = html.find(['table'], class_="tableList js-dataTooltip")
     knjige = tabela.find_all('tr')
@@ -171,7 +171,7 @@ def obdelava_strani(link):
 
         cel_link = "https://www.goodreads.com" + link_do_knjige
         pridobi_stran_knjige = requests.get(cel_link,
-                                            headers={'User-Agent' : userAgent})
+                                            headers={'User-Agent' : up_posrednik})
         html_knjiga = BeautifulSoup(pridobi_stran_knjige.text, 'html.parser',
                                     from_encoding='UTF-8')
         izid_in_strani = pridobi_izid_strani(html_knjiga)
@@ -193,7 +193,7 @@ def desetletje_podatki(link):
        v argumentu funkcije, ekstrahira vse podatke o knjigah, nato pa gre na
        naslednje strani posameznega desetletja.
     """
-    pridobi_stran = requests.get(link, headers = {'User-Agent' : userAgent})
+    pridobi_stran = requests.get(link, headers = {'User-Agent' : up_posrednik})
     html = BeautifulSoup(pridobi_stran.text, 'html.parser', from_encoding='UTF-8')
     desetletje_niz = html.find(['h1'], class_="gr-h1 gr-h1--serif").string
     desetletje = int((vzorec_desetletje.findall(desetletje_niz))[0])  # Iskanje oznake desetletja, da jo lahko potem vstavim v link za naslednje strani po desetletjih
