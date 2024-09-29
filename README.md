@@ -12,9 +12,6 @@ V zadnjem, tretjem delu sem poskusil določiti t.i. "zlato dobo" fantazijskega �
 
 Ugotovitve te projektne naloge sem zbral na koncu posameznih delov, nekaj uvidov v prihodnost tudi v Zaključku. Upam, da bodo rezultati pomagali vsem ljubiteljem fantazijskih knjig pri odločitvi, katero knjigo prebrati najprej.
 
-*Benjamin Dagarin*
+_Benjamin Dagarin_
 
-
-
-
-
+This work is licensed under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
